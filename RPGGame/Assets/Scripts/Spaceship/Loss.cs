@@ -1,0 +1,37 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+public class Loss : MonoBehaviour {
+    private void Awake() {
+        transform.Find("retryBtn").GetComponent<Button_UI>().ClickFunc = () => {
+            GameHandler.lives = 3;
+            Loader.Load(Loader.Scene.Spaceship);
+        };
+        transform.Find("homeBtn").GetComponent<Button_UI>().ClickFunc = () => {
+            GameHandler.lives = 3;
+            Loader.Load(Loader.Scene.home);
+        };
+    }
+
+    private void Start() {
+        Player.GetInstance().died += onDied;
+        Hide();
+    }
+    
+    void onDied(object sender, System.EventArgs e) {
+        Cursor.visible = true;
+        Show();
+    }
+
+    void Hide() {
+        gameObject.SetActive(false);
+    }
+    
+    void Show() {
+        gameObject.SetActive(true);
+    }
+}
